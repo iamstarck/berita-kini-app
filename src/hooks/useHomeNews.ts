@@ -1,18 +1,16 @@
-import { CATEGORIES, type HomeNewsResult } from "@/lib/definitions";
+import { categorySlug, type HomeNewsResult } from "@/lib/definitions";
 import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";
 import type { News, NewsSource } from "@/types/news";
-import { fetchCnnNews } from "@/api/cnn-news.service";
+import { fetchNews } from "@/api/fetchNews";
 
 export const useHomeNews = (source: NewsSource): HomeNewsResult => {
   const allNewsQuery = useNews(source);
 
-  const categorySlug = CATEGORIES.map((category) => category.slug);
-
   const categoryQueries = useQueries({
     queries: categorySlug.map((c) => ({
       queryKey: ["news", source, c],
-      queryFn: () => fetchCnnNews(c),
+      queryFn: () => fetchNews(source, c),
       staleTime: 1000 * 60 * 5,
     })),
   });

@@ -26,9 +26,21 @@ export const CATEGORIES = [
 
 export type CategorySlugType = (typeof CATEGORIES)[number]["slug"];
 
+export const categorySlug = CATEGORIES.map((c) => c.slug) as CategorySlugType[];
+
 export type HomeNewsResult = {
   headline: News | null;
   popular: News[];
+  recommendations: News[];
+
+  isLoading: boolean;
+  isError: boolean;
+  error: unknown;
+};
+
+export type CategoryNewsResult = {
+  headline: News | null;
+  categoryNews: News[];
   recommendations: News[];
 
   isLoading: boolean;
