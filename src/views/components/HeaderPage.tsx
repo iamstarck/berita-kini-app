@@ -4,11 +4,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import appLogo from "/app-logo.svg";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
+import { CATEGORIES } from "@/lib/definitions";
 
 const HeaderPage = () => {
   return (
@@ -22,100 +23,23 @@ const HeaderPage = () => {
 
       <NavigationMenu>
         <NavigationMenuList className="gap-2 max-lg:hidden">
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link to="/" className="hover:bg-transparent hover:text-primary">
-                <p className="font-medium">Beranda</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/about"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Terbaru</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/login"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Nasional</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/login"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Internasional</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/ekonomi"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Ekonomi</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/ekonomi"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Olahraga</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/ekonomi"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Teknologi</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/hiburan"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Hiburan</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                to="/hiburan"
-                className="font-poppins hover:bg-transparent hover:text-primary"
-              >
-                <p className="font-medium">Gaya Hidup</p>
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+          {CATEGORIES.map((category) => (
+            <NavigationMenuItem key={category.label}>
+              <NavigationMenuLink asChild>
+                <NavLink
+                  to={`/${category.slug}`}
+                  end
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary font-semibold"
+                      : "hover:bg-transparent hover:text-primary"
+                  }
+                >
+                  <p className="font-medium">{category.label}</p>
+                </NavLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
 
         <Sheet>
@@ -126,103 +50,18 @@ const HeaderPage = () => {
           </SheetTrigger>
           <SheetContent showCloseButton={false} className="w-fit">
             <NavigationMenuList className="flex flex-col mt-2 gap-1 px-10">
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/"
-                    className="hover:bg-transparent hover:text-primary w-full"
-                  >
-                    <p className="font-medium">Beranda</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/about"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Terbaru</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/login"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Nasional</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/login"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Internasional</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/ekonomi"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Ekonomi</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/ekonomi"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Olahraga</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/ekonomi"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Teknologi</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/hiburan"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Hiburan</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to="/hiburan"
-                    className="font-poppins hover:bg-transparent hover:text-primary"
-                  >
-                    <p className="font-medium">Gaya Hidup</p>
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              {CATEGORIES.map((category) => (
+                <NavigationMenuItem key={category.label}>
+                  <NavigationMenuLink asChild>
+                    <NavLink
+                      to={category.slug}
+                      className="hover:bg-transparent hover:text-primary w-full"
+                    >
+                      <p className="font-medium">{category.label}</p>
+                    </NavLink>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </SheetContent>
         </Sheet>
