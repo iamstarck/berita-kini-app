@@ -1,15 +1,13 @@
 import { axiosInstance, BASE_URL } from "@/lib/axios";
-import type { CATEGORIES } from "@/lib/definitions";
+import type { CategorySlugType } from "@/lib/definitions";
 import type { CnnNewsResponse } from "@/types/cnn.types";
 import type { News } from "@/types/news";
-
-type CategorySlug = (typeof CATEGORIES)[number]["slug"];
 
 const CNN_ENDPOINT = "/cnn-news";
 const cnnAxios = axiosInstance(BASE_URL);
 
 export const fetchCnnNews = async (
-  category?: CategorySlug,
+  category?: CategorySlugType,
 ): Promise<News[]> => {
   const endpoint = category
     ? `${CNN_ENDPOINT}/${category}`
