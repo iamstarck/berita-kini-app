@@ -1,0 +1,96 @@
+import {
+  SiFacebook,
+  SiInstagram,
+  SiX,
+  SiYoutube,
+} from "@icons-pack/react-simple-icons";
+import appLogo from "/app-logo.svg";
+import { Link } from "react-router-dom";
+import { MailIcon } from "lucide-react";
+
+const FooterPage = () => {
+  return (
+    <footer className="flex flex-col justify-between bg-destructive p-8 text-background gap-8">
+      <div className="flex max-lg:flex-col justify-between w-full max-lg:gap-8 lg:pr-80">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Link to={"/"} className="flex items-center gap-1">
+              <img
+                src={appLogo}
+                alt="update-berita-logo"
+                className="stroke-background w-8"
+              />
+              <p className="text-xl font-semibold">UPDATE BERITA</p>
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <a href="https://www.youtube.com" target="_blank">
+              <SiYoutube size={28} />
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+              <SiFacebook size={28} />
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+              <SiInstagram size={28} />
+            </a>
+            <a href="https://x.com" target="_blank">
+              <SiX size={28} />
+            </a>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <p className="font-bold">Telusuri</p>
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-1">
+            <li>
+              <Link to={"/"}>Beranda</Link>
+            </li>
+            <li>
+              <Link to={"/terbaru"}>Terbaru</Link>
+            </li>
+            <li>
+              <Link to={"/nasional"}>Nasional</Link>
+            </li>
+            <li>
+              <Link to={"/internasional"}>Internasional</Link>
+            </li>
+            <li>
+              <Link to={"/internasional"}>Ekonomi</Link>
+            </li>
+            <li>
+              <Link to={"/olahraga"}>Olahraga</Link>
+            </li>
+            <li>
+              <Link to={"/teknologi"}>Teknologi</Link>
+            </li>
+            <li>
+              <Link to={"/teknologi"}>Hiburan</Link>
+            </li>
+            <li>
+              <Link to={"/gaya-hidup"}>Gaya Hidup</Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="space-y-4">
+          <p className="font-bold">Hubungi Kami</p>
+          <div className="space-y-2">
+            <p className="flex items-center gap-2">
+              <MailIcon /> info@updateberita.com
+            </p>
+            <p>Semarang, Indonesia</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t pt-4">
+        <p className="text-center">
+          &copy; 2026 Update Berita. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+  );
+};
+
+export default FooterPage;
