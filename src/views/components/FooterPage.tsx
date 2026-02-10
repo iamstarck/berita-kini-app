@@ -7,6 +7,7 @@ import {
 import appLogo from "/app-logo.svg";
 import { Link } from "react-router-dom";
 import { MailIcon } from "lucide-react";
+import { CATEGORIES } from "@/lib/definitions";
 
 const FooterPage = () => {
   return (
@@ -43,33 +44,11 @@ const FooterPage = () => {
         <div className="space-y-4">
           <p className="font-bold">Telusuri</p>
           <ul className="grid grid-cols-2 gap-x-8 gap-y-1">
-            <li>
-              <Link to={"/"}>Beranda</Link>
-            </li>
-            <li>
-              <Link to={"/terbaru"}>Terbaru</Link>
-            </li>
-            <li>
-              <Link to={"/nasional"}>Nasional</Link>
-            </li>
-            <li>
-              <Link to={"/internasional"}>Internasional</Link>
-            </li>
-            <li>
-              <Link to={"/internasional"}>Ekonomi</Link>
-            </li>
-            <li>
-              <Link to={"/olahraga"}>Olahraga</Link>
-            </li>
-            <li>
-              <Link to={"/teknologi"}>Teknologi</Link>
-            </li>
-            <li>
-              <Link to={"/teknologi"}>Hiburan</Link>
-            </li>
-            <li>
-              <Link to={"/gaya-hidup"}>Gaya Hidup</Link>
-            </li>
+            {CATEGORIES.map((category) => (
+              <li key={category.label}>
+                <Link to={category.slug}>{category.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
