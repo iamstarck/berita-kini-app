@@ -13,7 +13,6 @@ type TDateISOTime = `${THours}:${TMinutes}:${TSeconds}.${TMilliseconds}`;
 export type TDateISO = `${TDateISODate}T${TDateISOTime}Z`;
 
 export const CATEGORIES = [
-  { label: "Terbaru", slug: "" },
   { label: "Nasional", slug: "nasional" },
   { label: "Internasional", slug: "internasional" },
   { label: "Ekonomi", slug: "ekonomi" },

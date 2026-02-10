@@ -4,7 +4,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import appLogo from "/app-logo.svg";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -26,12 +26,17 @@ const HeaderPage = () => {
           {CATEGORIES.map((category) => (
             <NavigationMenuItem key={category.label}>
               <NavigationMenuLink asChild>
-                <Link
-                  to={category.slug}
-                  className="hover:bg-transparent hover:text-primary"
+                <NavLink
+                  to={`/${category.slug}`}
+                  end
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary font-semibold"
+                      : "hover:bg-transparent hover:text-primary"
+                  }
                 >
                   <p className="font-medium">{category.label}</p>
-                </Link>
+                </NavLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
@@ -48,12 +53,12 @@ const HeaderPage = () => {
               {CATEGORIES.map((category) => (
                 <NavigationMenuItem key={category.label}>
                   <NavigationMenuLink asChild>
-                    <Link
+                    <NavLink
                       to={category.slug}
                       className="hover:bg-transparent hover:text-primary w-full"
                     >
                       <p className="font-medium">{category.label}</p>
-                    </Link>
+                    </NavLink>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}

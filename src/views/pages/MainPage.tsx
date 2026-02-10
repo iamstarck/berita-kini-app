@@ -9,23 +9,47 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { CATEGORIES } from "@/lib/definitions";
+// import { useNews } from "@/hooks/useNews";
+import { HomeIcon } from "lucide-react";
 
 const MainPage = () => {
+  const { category } = useParams<{ category: string }>();
+
+  const currenctCategory =
+    CATEGORIES.find((c) => c.slug === category) ?? CATEGORIES[0];
+
+  const isValidCategory =
+    !category || CATEGORIES.some((c) => c.slug === category);
+
+  if (!isValidCategory) return <Navigate to="404" replace />;
+
+  // const apiCategory = category;
+  // const { data, isLoading, error } = useNews("cnn", apiCategory);
+
   return (
     <div className="m-8 space-y-8">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} className="flex items-center gap-1">
+                {" "}
+                <HomeIcon size={16} />
+                Home
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-          </BreadcrumbItem>
+          {category && (
+            <>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{currenctCategory.label}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </>
+          )}
         </BreadcrumbList>
       </Breadcrumb>
 
