@@ -1,6 +1,7 @@
 import type { TDateISO } from "@/lib/definitions";
 
-export type NewsSource = "cnn" | "republika";
+export type NewsSource = "cnn";
+// | "republika";
 
 export interface News {
   id: string;

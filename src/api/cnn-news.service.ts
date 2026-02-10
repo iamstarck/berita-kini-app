@@ -1,16 +1,24 @@
-import { axiosInstance } from "@/lib/axios";
+import { axiosInstance, BASE_URL } from "@/lib/axios";
+import type { CATEGORIES } from "@/lib/definitions";
 import type { CnnNewsResponse } from "@/types/cnn.types";
 import type { News } from "@/types/news";
 
-const CNN_NEWS_URL = "https://berita-indo-api-next.vercel.app";
-const cnnAxios = axiosInstance(CNN_NEWS_URL);
+type CategorySlug = (typeof CATEGORIES)[number]["slug"];
 
-export const fetchCnnNews = async (category?: string): Promise<News[]> => {
-  const endpoint = category ? `/api/cnn-news/${category}` : `/api/cnn-news/`;
+const CNN_ENDPOINT = "/cnn-news";
+const cnnAxios = axiosInstance(BASE_URL);
+
+export const fetchCnnNews = async (
+  category?: CategorySlug,
+): Promise<News[]> => {
+  const endpoint = category
+    ? `${CNN_ENDPOINT}/${category}`
+    : `${CNN_ENDPOINT}/`;
 
   const response = await cnnAxios.get<CnnNewsResponse>(endpoint);
+  const items = response.data.data ?? [];
 
-  return response.data.data.map((item) => ({
+  return items.map((item) => ({
     id: item.link,
     title: item.title,
     summary: item.contentSnippet,
