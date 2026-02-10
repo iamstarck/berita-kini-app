@@ -1,9 +1,16 @@
+import FooterPage from "./views/components/FooterPage";
+import HeaderPage from "./views/components/HeaderPage";
+import HomePage from "./views/pages/HomePage";
+
 const App = () => {
   return (
     <>
-      <div>
-        <h1 className="text-4xl font-bold">Berita Kini</h1>
-      </div>
+      <HeaderPage />
+      <main className="min-h-screen mt-8">
+        <HomePage />
+      </main>
+
+      <FooterPage />
     </>
   );
 };
