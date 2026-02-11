@@ -45,7 +45,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <Card className="w-full lg:max-w-lg h-fit lg:sticky top-4">
+          <Card className="w-full lg:max-w-lg h-fit lg:sticky top-28">
             <CardHeader>
               <CardTitle className="border-l-4 border-l-primary">
                 <span className="text-2xl font-semibold leading-normal tracking-wide pl-2">
