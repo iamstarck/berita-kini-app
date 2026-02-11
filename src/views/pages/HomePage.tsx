@@ -1,16 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NewsCard from "../components/NewsCard";
 import HeadlineCard from "../components/HeadlineCard";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-} from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
-import { CircleAlertIcon, HomeIcon } from "lucide-react";
+import { CircleAlertIcon } from "lucide-react";
 import { useHomeNews } from "@/hooks/useHomeNews";
 import { Skeleton } from "@/components/ui/skeleton";
+import CustomBreadCrumb from "../components/CustomBreadCrumb";
 
 const HomePage = () => {
   const { headline, popular, recommendations, isLoading, isError } =
@@ -18,19 +12,7 @@ const HomePage = () => {
 
   return (
     <div className="m-8 space-y-8">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link to={"/"} className="flex items-center gap-1">
-                {" "}
-                <HomeIcon size={16} />
-                Home
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <CustomBreadCrumb />
 
       <div className="space-y-16">
         <HeadlineCard news={headline} isLoading={isLoading} isError={isError} />
@@ -63,7 +45,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <Card className="w-full lg:max-w-lg h-fit lg:sticky top-4">
+          <Card className="w-full lg:max-w-lg h-fit lg:sticky top-28">
             <CardHeader>
               <CardTitle className="border-l-4 border-l-primary">
                 <span className="text-2xl font-semibold leading-normal tracking-wide pl-2">
