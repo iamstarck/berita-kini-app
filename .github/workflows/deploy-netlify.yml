@@ -29,6 +29,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_API_BASE: ${{ vars.VITE_API_BASE }}
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
@@ -38,4 +40,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          VITE_API_BASE: ${{ vars.VITE_API_BASE }}
