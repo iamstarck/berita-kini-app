@@ -15,13 +15,11 @@ import {
 import { useCategoryNews } from "@/hooks/useCategoryNews";
 import { categorySlug, type CategorySlugType } from "@/types/definitions";
 import { toWordCase } from "@/lib/toWordCase";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CustomBreadCrumb from "../components/CustomBreadCrumb";
+import SearchBar from "../components/SearchBar";
 
 const CategoryPage = () => {
-  const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 8;
-
   const { category } = useParams<{ category: string }>();
   const currentCategory = categorySlug.find((c) => c === category) as
     | CategorySlugType
@@ -32,19 +30,41 @@ const CategoryPage = () => {
   const { headline, categoryNews, recommendations, isLoading, isError } =
     useCategoryNews("cnn", categoryToUse);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
+  const filteredNews = useMemo(() => {
+    if (!debouncedQuery) return categoryNews;
+
+    return categoryNews.filter((news) =>
+      news.title.toLowerCase().includes(debouncedQuery.toLowerCase()),
+    );
+  }, [categoryNews, debouncedQuery]);
+
+  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 8;
+
   const paginatedNews = useMemo(() => {
     const start = (page - 1) * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
 
-    return categoryNews.slice(start, end);
-  }, [categoryNews, page]);
+    return filteredNews.slice(start, end);
+  }, [filteredNews, page]);
 
   const isValidCategory =
     !category || categorySlug.includes(category as CategorySlugType);
 
   if (!isValidCategory) return <Navigate to="404" replace />;
 
-  const totalPages = Math.ceil(categoryNews.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE);
 
   return (
     <div key={categoryToUse} className="m-8 space-y-8">
@@ -59,15 +79,24 @@ const CategoryPage = () => {
 
         <div className="justify-between space-y-8 gap-8">
           <div className="space-y-4 w-full">
-            <div className="border-l-4 border-l-primary pl-2">
-              <h2 className="text-2xl font-semibold leading-normal tracking-wide">
-                Terbaru
-              </h2>
+            <div className="flex max-lg:block space-y-4 justify-between">
+              <div className="border-l-4 border-l-primary pl-2">
+                <h2 className="text-2xl font-semibold leading-normal tracking-wide">
+                  Terbaru
+                </h2>
+              </div>
+              <SearchBar value={searchQuery} onChange={setSearchQuery} />
             </div>
 
             {isError && (
               <p className="inline-flex items-center gap-1 text-destructive">
                 <CircleAlertIcon size={14} /> Gagal memuat berita
+              </p>
+            )}
+
+            {!isLoading && paginatedNews.length === 0 && (
+              <p className="text-muted-foreground">
+                Tidak ada berita tentang "{debouncedQuery}" ditemukan
               </p>
             )}
 
