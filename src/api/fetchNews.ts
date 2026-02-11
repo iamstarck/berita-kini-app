@@ -1,4 +1,4 @@
-import type { CategorySlugType } from "@/lib/definitions";
+import type { CategorySlugType } from "@/types/definitions";
 import type { NewsSource } from "@/types/news";
 import { newsFetchers } from "./news.registry";
 

@@ -1,4 +1,4 @@
-import { categorySlug, type HomeNewsResult } from "@/lib/definitions";
+import { categorySlug, type HomeNewsResult } from "@/types/definitions";
 import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";
 import type { News, NewsSource } from "@/types/news";
@@ -12,25 +12,35 @@ export const useHomeNews = (source: NewsSource): HomeNewsResult => {
       queryKey: ["news", source, c],
       queryFn: () => fetchNews(source, c),
       staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 5 * 10,
     })),
   });
 
   const isLoading =
     allNewsQuery.isLoading || categoryQueries.some((q) => q.isLoading);
 
-  const isError =
-    allNewsQuery.isError || categoryQueries.some((q) => q.isError);
+  const isError = allNewsQuery.isError;
 
-  const error =
-    allNewsQuery.error || categoryQueries.find((q) => q.error)?.error;
+  const error = allNewsQuery.error ?? null;
 
-  if (isLoading || isError) {
+  if (isLoading) {
     return {
       headline: null,
       popular: [],
       recommendations: [],
-      isLoading,
-      isError,
+      isLoading: true,
+      isError: false,
+      error: null,
+    };
+  }
+
+  if (isError) {
+    return {
+      headline: null,
+      popular: [],
+      recommendations: [],
+      isLoading: false,
+      isError: true,
       error,
     };
   }
@@ -44,16 +54,17 @@ export const useHomeNews = (source: NewsSource): HomeNewsResult => {
   const recommendations: News[] = [];
 
   categoryQueries.forEach((query) => {
-    const items = query.data ?? [];
+    if (!query.isSuccess) return;
 
-    if (items.length > 0) {
-      if (
-        items[0].id !== headline?.id &&
-        !popular.some((p) => p.id === items[0].id)
-      ) {
-        recommendations.push(items[0]);
-      }
-    }
+    const items = query.data;
+    if (!items?.length) return;
+
+    const candidate = items.find(
+      (item) =>
+        item.id !== headline?.id && !popular.some((p) => p.id === item.id),
+    );
+
+    if (candidate) recommendations.push(candidate);
   });
 
   return {
