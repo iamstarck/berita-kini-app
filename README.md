@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# Update Berita App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **news aggregator web application** built with **React, TypeScript, and Vite**.  
+The app displays the latest headlines in a clean, fast, and responsive interface.
 
-Currently, two official plugins are available:
+🔗 Live Demo: https://update-berita.netlify.app/  
+📦 Repository: https://github.com/iamstarck/berita-kini-app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Overview
 
-## React Compiler
+Update Berita App is a frontend web application designed to deliver up-to-date news content in a simple and user-friendly layout.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project focuses on:
 
-## Expanding the ESLint configuration
+- Performance optimization using Vite
+- Scalable component-based architecture with React
+- Type safety with TypeScript
+- Clean and responsive UI design
+- Production deployment via Netlify
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+| Layer      | Technology |
+| ---------- | ---------- |
+| Frontend   | React      |
+| Language   | TypeScript |
+| Build Tool | Vite       |
+| Styling    | CSS        |
+| Deployment | Netlify    |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+- 📰 Display latest news headlines
+- 📂 Category-based filtering
+- 📱 Responsive layout (mobile & desktop)
+- ⚡ Fast refresh with Vite
+- 🧩 Modular component structure
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/iamstarck/berita-kini-app.git
+cd berita-kini-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+```bash
+npm install
+```
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### 3. Add .env file
+
+```bash
+VITE_API_BASE=/api
+```
+
+### 4. Run Development Server
+
+```bash
+npm run dev
+```
+
+The app will run on:
+
+```bash
+http://localhost:5173
 ```
