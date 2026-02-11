@@ -1,5 +1,5 @@
 import { fetchNews } from "@/api/fetchNews";
-import type { CategorySlugType } from "@/lib/definitions";
+import type { CategorySlugType } from "@/types/definitions";
 import type { NewsSource } from "@/types/news";
 import { useQuery } from "@tanstack/react-query";
 

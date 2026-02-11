@@ -1,6 +1,6 @@
 import type { News, NewsSource } from "@/types/news";
 import { fetchCnnNews } from "./cnn-news.service";
-import type { CategorySlugType } from "@/lib/definitions";
+import type { CategorySlugType } from "@/types/definitions";
 
 export type NewsFetcher = (category?: CategorySlugType) => Promise<News[]>;
 

@@ -2,7 +2,7 @@ import {
   categorySlug,
   type CategoryNewsResult,
   type CategorySlugType,
-} from "@/lib/definitions";
+} from "@/types/definitions";
 import type { News, NewsSource } from "@/types/news";
 import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";

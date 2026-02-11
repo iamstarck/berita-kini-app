@@ -1,4 +1,4 @@
-import type { TDateISO } from "@/lib/definitions";
+import type { TDateISO } from "@/types/definitions";
 
 export type NewsSource = "cnn";
 // | "republika";
