@@ -5,6 +5,7 @@ import NotFoundPage from "./views/pages/NotFoundPage";
 import HeaderPage from "./views/components/HeaderPage";
 import FooterPage from "./views/components/FooterPage";
 import CategoryPage from "./views/pages/CategoryPage";
+import { ThemeProvider } from "./components/common/theme-provider";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
@@ -29,13 +30,15 @@ const Routes = () => {
 
 const App = () => {
   return (
-    <Wrapper>
-      <HeaderPage />
-      <main className="min-h-screen mt-8">
-        <Routes />
-      </main>
-      <FooterPage />
-    </Wrapper>
+    <ThemeProvider defaultTheme="system" storageKey="news-theme">
+      <Wrapper>
+        <HeaderPage />
+        <main className="min-h-screen mt-8">
+          <Routes />
+        </main>
+        <FooterPage />
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
 import { CATEGORIES } from "@/types/definitions";
 import { useEffect, useState } from "react";
+import { ModeToggle } from "@/components/common/mode-toggle";
 
 const HeaderPage = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,7 +40,7 @@ const HeaderPage = () => {
         </p>
       </Link>
 
-      <NavigationMenu>
+      <NavigationMenu className="gap-2">
         <NavigationMenuList className="gap-2 max-lg:hidden">
           <NavigationMenuItem>
             <NavLink to={"/"}>
@@ -63,6 +64,7 @@ const HeaderPage = () => {
           ))}
         </NavigationMenuList>
 
+        <ModeToggle />
         <Sheet>
           <SheetTrigger asChild className="lg:hidden z-9999">
             <Button variant="outline">
