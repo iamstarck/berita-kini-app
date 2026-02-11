@@ -4,7 +4,7 @@ import {
   SiX,
   SiYoutube,
 } from "@icons-pack/react-simple-icons";
-import appLogo from "/app-logo.svg";
+import AppLogo from "@/assets/app-logo.svg?react";
 import { Link } from "react-router-dom";
 import { MailIcon } from "lucide-react";
 import { CATEGORIES } from "@/types/definitions";
@@ -16,11 +16,7 @@ const FooterPage = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Link to={"/"} className="flex items-center gap-1">
-              <img
-                src={appLogo}
-                alt="update-berita-logo"
-                className="stroke-background w-8"
-              />
+              <AppLogo className="stroke-background w-8" />
               <p className="text-xl font-semibold">UPDATE BERITA</p>
             </Link>
           </div>

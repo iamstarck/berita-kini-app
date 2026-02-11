@@ -1,7 +1,6 @@
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Link, NavLink } from "react-router-dom";
@@ -44,21 +43,18 @@ const HeaderPage = () => {
         <NavigationMenuList className="gap-2 max-lg:hidden">
           <NavigationMenuItem>
             <NavLink to={"/"}>
-              <NavigationMenuLink>
-                <p className="font-medium">Terbaru</p>
-              </NavigationMenuLink>
+              <p className="font-medium">Terbaru</p>
             </NavLink>
           </NavigationMenuItem>
           {CATEGORIES.map((category) => (
             <NavigationMenuItem key={category.label}>
-              <NavLink to={`/${category.slug}`}>
-                {({ isActive }) => (
-                  <NavigationMenuLink
-                    className={isActive ? "text-primary" : ""}
-                  >
-                    <p className="font-medium">{category.label}</p>
-                  </NavigationMenuLink>
-                )}
+              <NavLink
+                to={`/${category.slug}`}
+                className={({ isActive }) =>
+                  isActive ? "text-primary font-semibold" : "hover:text-primary"
+                }
+              >
+                <p className="font-medium text-lg">{category.label}</p>
               </NavLink>
             </NavigationMenuItem>
           ))}
@@ -82,21 +78,20 @@ const HeaderPage = () => {
             <NavigationMenuList className="flex flex-col mt-2 gap-1 px-10">
               <NavigationMenuItem>
                 <NavLink to={"/"}>
-                  <NavigationMenuLink>
-                    <p className="font-medium">Terbaru</p>
-                  </NavigationMenuLink>
+                  <p className="font-medium">Terbaru</p>
                 </NavLink>
               </NavigationMenuItem>
               {CATEGORIES.map((category) => (
                 <NavigationMenuItem key={category.label}>
-                  <NavLink to={`/${category.slug}`}>
-                    {({ isActive }) => (
-                      <NavigationMenuLink
-                        className={isActive ? "text-primary" : ""}
-                      >
-                        <p className="font-medium">{category.label}</p>
-                      </NavigationMenuLink>
-                    )}
+                  <NavLink
+                    to={`/${category.slug}`}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-primary font-semibold"
+                        : "hover:text-primary"
+                    }
+                  >
+                    <p className="font-medium text-lg">{category.label}</p>
                   </NavLink>
                 </NavigationMenuItem>
               ))}
