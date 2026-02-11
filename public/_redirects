@@ -1,1 +1,1 @@
-/api/*  https://berita-indo-api-next.vercel.app/:splat  200!
+/api/*  https://berita-indo-api-next.vercel.app/api/:splat  200!
