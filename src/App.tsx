@@ -1,9 +1,9 @@
-import { Navigate, useLocation, useRoutes } from "react-router-dom";
-import FooterPage from "./views/components/FooterPage";
-import HeaderPage from "./views/components/HeaderPage";
-import MainPage from "./views/pages/MainPage";
-import NotFoundPage from "./views/pages/NotFoundPage";
 import { useLayoutEffect, type ReactNode } from "react";
+import { Navigate, useLocation, useRoutes } from "react-router-dom";
+import HomePage from "./views/pages/HomePage";
+import NotFoundPage from "./views/pages/NotFoundPage";
+import HeaderPage from "./views/components/HeaderPage";
+import FooterPage from "./views/components/FooterPage";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
@@ -17,9 +17,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 
 const Routes = () => {
   const element = useRoutes([
-    { path: "/", element: <MainPage /> },
+    { path: "/", element: <HomePage /> },
     { path: "/404", element: <NotFoundPage /> },
-    { path: "/:category", element: <MainPage /> },
+    { path: "/:category", element: <HomePage /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 
