@@ -4,6 +4,7 @@ import HomePage from "./views/pages/HomePage";
 import NotFoundPage from "./views/pages/NotFoundPage";
 import HeaderPage from "./views/components/HeaderPage";
 import FooterPage from "./views/components/FooterPage";
+import CategoryPage from "./views/pages/CategoryPage";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const Routes = () => {
   const element = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/404", element: <NotFoundPage /> },
-    { path: "/:category", element: <HomePage /> },
+    { path: "/:category", element: <CategoryPage key={location.pathname} /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 

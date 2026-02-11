@@ -7,6 +7,17 @@ import type { News, NewsSource } from "@/types/news";
 import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";
 import { fetchNews } from "@/api/fetchNews";
+import { useMemo } from "react";
+
+const pickRandomCategories = (
+  categories: CategorySlugType[],
+  current: CategorySlugType,
+  count: number,
+) => {
+  const filtered = categories.filter((c) => c !== current);
+
+  return filtered.sort(() => 0.5 - Math.random()).slice(0, count);
+};
 
 export const useCategoryNews = (
   source: NewsSource,
@@ -14,10 +25,13 @@ export const useCategoryNews = (
 ): CategoryNewsResult => {
   const categoryNewsQuery = useNews(source, category);
 
-  const otherCategories = categorySlug.filter((c) => c !== category);
+  const randomCategories = useMemo(
+    () => pickRandomCategories(categorySlug, category, 5),
+    [category],
+  );
 
   const otherCategoryQueries = useQueries({
-    queries: otherCategories.map((c) => ({
+    queries: randomCategories.map((c) => ({
       queryKey: ["news", source, c],
       queryFn: () => fetchNews(source, c),
       staleTime: 1000 * 60 * 5,
@@ -34,25 +48,43 @@ export const useCategoryNews = (
   const error =
     categoryNewsQuery.error || otherCategoryQueries.find((q) => q.error)?.error;
 
-  if (isLoading || isError) {
+  if (isLoading) {
     return {
       headline: null,
       categoryNews: [],
       recommendations: [],
-      isLoading,
-      isError,
+      isLoading: true,
+      isError: false,
+      error: null,
+    };
+  }
+
+  if (isError) {
+    return {
+      headline: null,
+      categoryNews: [],
+      recommendations: [],
+      isLoading: false,
+      isError: true,
       error,
     };
   }
 
-  const categoryNews: News[] = categoryNewsQuery.data ?? [];
+  const categoryNewsRaw: News[] = categoryNewsQuery.data ?? [];
 
-  const headline =
-    categoryNews
-      .filter((n: News) => Boolean(n.imageUrl))
-      .sort(
-        (a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt),
-      )[0] ?? null;
+  const headline = categoryNewsRaw.reduce(
+    (latest, current) => {
+      if (!current.imageUrl) return latest;
+      if (!latest) return current;
+
+      return Date.parse(current.publishedAt) > Date.parse(latest.publishedAt)
+        ? current
+        : latest;
+    },
+    null as News | null,
+  );
+
+  const categoryNews: News[] = categoryNewsRaw.filter((n) => n !== headline);
 
   const recommendations: News[] = [];
 
