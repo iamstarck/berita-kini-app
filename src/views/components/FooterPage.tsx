@@ -21,6 +21,12 @@ const FooterPage = () => {
             </Link>
           </div>
 
+          <p className="font-semibold hover:underline">
+            <a href="https://storyset.com/web" target="_blank">
+              Web illustrations by Storyset
+            </a>
+          </p>
+
           <div className="flex items-center gap-4">
             <a href="https://www.youtube.com" target="_blank">
               <SiYoutube size={28} />
