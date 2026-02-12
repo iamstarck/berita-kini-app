@@ -1,8 +1,5 @@
-import NewsCard from "../components/NewsCard";
 import HeadlineCard from "../components/HeadlineCard";
 import { Navigate, useParams } from "react-router-dom";
-import { CircleAlertIcon } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Pagination,
   PaginationContent,
@@ -15,9 +12,14 @@ import {
 import { useCategoryNews } from "@/hooks/useCategoryNews";
 import { categorySlug, type CategorySlugType } from "@/types/definitions";
 import { toWordCase } from "@/lib/toWordCase";
-import { useEffect, useMemo, useState } from "react";
-import CustomBreadCrumb from "../components/CustomBreadCrumb";
-import SearchBar from "../components/SearchBar";
+import { useMemo, useState } from "react";
+import CustomBreadCrumb from "../components/atoms/CustomBreadCrumb";
+import SearchBar from "../components/atoms/SearchBar";
+import ErrorMessage from "../components/atoms/ErrorMessage";
+import NewsGrid from "../components/NewsGrid";
+import { useDebounce } from "@/utils/useDebounce";
+import { usePagination } from "@/utils/usePagination";
+import SectionTitle from "../components/atoms/SectionTitle";
 
 const CategoryPage = () => {
   const { category } = useParams<{ category: string }>();
@@ -31,15 +33,7 @@ const CategoryPage = () => {
     useCategoryNews("cnn", categoryToUse);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [searchQuery]);
+  const debouncedQuery = useDebounce(searchQuery, 300);
 
   const filteredNews = useMemo(() => {
     if (!debouncedQuery) return categoryNews;
@@ -49,22 +43,15 @@ const CategoryPage = () => {
     );
   }, [categoryNews, debouncedQuery]);
 
-  const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 8;
-
-  const paginatedNews = useMemo(() => {
-    const start = (page - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
-
-    return filteredNews.slice(start, end);
-  }, [filteredNews, page]);
+  const { page, setPage, totalPages, paginatedData } = usePagination(
+    filteredNews,
+    8,
+  );
 
   const isValidCategory =
     !category || categorySlug.includes(category as CategorySlugType);
 
   if (!isValidCategory) return <Navigate to="404" replace />;
-
-  const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE);
 
   return (
     <div key={categoryToUse} className="m-8 space-y-8">
@@ -80,38 +67,25 @@ const CategoryPage = () => {
         <div className="justify-between space-y-8 gap-8">
           <div className="space-y-4 w-full">
             <div className="flex max-lg:block space-y-4 justify-between">
-              <div className="border-l-4 border-l-primary pl-2">
-                <h2 className="text-2xl font-semibold leading-normal tracking-wide">
-                  Terbaru
-                </h2>
-              </div>
+              <SectionTitle title="Tebaru" />
               <SearchBar value={searchQuery} onChange={setSearchQuery} />
             </div>
 
-            {isError && (
-              <p className="inline-flex items-center gap-1 text-destructive">
-                <CircleAlertIcon size={14} /> Gagal memuat berita
-              </p>
-            )}
+            {isError && <ErrorMessage />}
 
-            {!isLoading && paginatedNews.length === 0 && (
+            {!isLoading && paginatedData.length === 0 && (
               <p className="text-muted-foreground">
                 Tidak ada berita tentang "{debouncedQuery}" ditemukan
               </p>
             )}
 
-            <div className="grid lg:grid-cols-4 gap-4">
-              {isLoading
-                ? Array.from({ length: 5 }).map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      className="h-90 lg:h-100 w-full bg-secondary"
-                    />
-                  ))
-                : paginatedNews.map((news) => (
-                    <NewsCard key={news.id} news={news} />
-                  ))}
-            </div>
+            <NewsGrid
+              columns="lg:grid-cols-4"
+              isLoading={isLoading}
+              skeletonCount={5}
+              skeletonHeight="h-135 lg:h-95"
+              data={paginatedData}
+            />
 
             {totalPages > 1 && (
               <Pagination className="justify-end select-none hover:cursor-pointer">
@@ -180,30 +154,17 @@ const CategoryPage = () => {
           </div>
 
           <div className="space-y-4 w-full">
-            <div className="border-l-4 border-l-primary pl-2">
-              <h2 className="text-2xl font-semibold leading-normal tracking-wide">
-                Rekomendasi Untuk Anda
-              </h2>
-            </div>
+            <SectionTitle title="Rekomendasi untuk Anda" />
 
-            {isError && (
-              <p className="inline-flex items-center gap-1 text-destructive">
-                <CircleAlertIcon size={14} /> Gagal memuat berita
-              </p>
-            )}
+            {isError && <ErrorMessage />}
 
-            <div className="grid lg:grid-cols-4 gap-4">
-              {isLoading
-                ? Array.from({ length: 5 }).map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      className="h-90 lg:h-100 w-full bg-secondary"
-                    />
-                  ))
-                : recommendations.map((news) => (
-                    <NewsCard key={news.id} news={news} />
-                  ))}
-            </div>
+            <NewsGrid
+              columns="lg:grid-cols-4"
+              isLoading={isLoading}
+              skeletonCount={3}
+              skeletonHeight="h-135 lg:h-95"
+              data={recommendations}
+            />
           </div>
         </div>
       </div>
