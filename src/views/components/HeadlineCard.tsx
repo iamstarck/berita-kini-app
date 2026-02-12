@@ -13,7 +13,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatLocalDate } from "@/lib/date";
 import type { News } from "@/types/news";
-import { CalendarIcon, CircleAlertIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
+import ErrorMessage from "./atoms/ErrorMessage";
 
 interface HeadlineCardProps {
   news: News | null;
@@ -23,9 +24,7 @@ interface HeadlineCardProps {
 
 const HeadlineCard = ({ news, isLoading, isError }: HeadlineCardProps) => {
   return isError ? (
-    <p className="inline-flex items-center gap-1 text-destructive">
-      <CircleAlertIcon size={14} /> Gagal memuat berita
-    </p>
+    <ErrorMessage />
   ) : (
     <Card className="flex lg:flex-row mx-auto overflow-hidden py-0">
       <div className="relative w-full max-w-2xl">
