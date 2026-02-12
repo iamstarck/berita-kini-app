@@ -20,17 +20,18 @@ The project focuses on:
 
 ## 🛠️ Tech Stack
 
-| Layer      | Technology |
-| ---------- | ---------- |
-| Frontend   | React      |
-| Language   | TypeScript |
-| Build Tool | Vite       |
-| Styling    | CSS        |
-| Deployment | Netlify    |
+| Layer      | Technology           |
+| ---------- | -------------------- |
+| Frontend   | React                |
+| Language   | TypeScript           |
+| Build Tool | Vite                 |
+| Styling    | ShadCN + TailwindCSS |
+| Deployment | Netlify              |
 
 ## ✨ Features
 
 - 📰 Display latest news headlines
+- 🔍 Search functionality
 - 📂 Category-based filtering
 - 📱 Responsive layout (mobile & desktop)
 - ⚡ Fast refresh with Vite
