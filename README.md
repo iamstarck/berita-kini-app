@@ -31,6 +31,7 @@ The project focuses on:
 ## ✨ Features
 
 - 📰 Display latest news headlines
+- 🔍 Search functionality
 - 📂 Category-based filtering
 - 📱 Responsive layout (mobile & desktop)
 - ⚡ Fast refresh with Vite
