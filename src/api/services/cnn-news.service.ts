@@ -1,6 +1,6 @@
 import { axiosInstance, BASE_URL } from "@/lib/axios";
 import type { CategorySlugType } from "@/types/definitions";
-import type { CnnNewsResponse } from "@/types/cnn.types";
+import type { CnnNewsResponse } from "@/types/sources/cnn.types";
 import type { News } from "@/types/news";
 
 const CNN_ENDPOINT = "cnn-news";
@@ -20,7 +20,7 @@ export const fetchCnnNews = async (
       title: item.title,
       summary: item.contentSnippet,
       url: item.link,
-      publishedAt: item.isoDate,
+      publishedAt: new Date(item.isoDate).toISOString(),
       imageUrl: item.image?.large,
       source: "cnn",
     }));

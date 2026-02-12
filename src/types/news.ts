@@ -1,7 +1,4 @@
-import type { TDateISO } from "@/types/definitions";
-
-export type NewsSource = "cnn";
-// | "republika";
+export type NewsSource = "cnn" | "republika";
 
 export interface News {
   id: string;
@@ -9,7 +6,7 @@ export interface News {
   summary: string;
   url: string;
   author?: string[];
-  publishedAt: TDateISO;
+  publishedAt: string;
   imageUrl?: string;
   source: NewsSource;
 }
