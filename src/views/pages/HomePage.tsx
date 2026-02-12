@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import NewsCard from "../components/NewsCard";
 import HeadlineCard from "../components/HeadlineCard";
-import { CircleAlertIcon } from "lucide-react";
 import { useHomeNews } from "@/hooks/useHomeNews";
 import { Skeleton } from "@/components/ui/skeleton";
-import CustomBreadCrumb from "../components/CustomBreadCrumb";
+import CustomBreadCrumb from "../components/atoms/CustomBreadCrumb";
+import ErrorMessage from "../components/atoms/ErrorMessage";
+import NewsGrid from "../components/NewsGrid";
+import SectionTitle from "../components/atoms/SectionTitle";
 
 const HomePage = () => {
   const { headline, popular, recommendations, isLoading, isError } =
@@ -19,30 +20,17 @@ const HomePage = () => {
 
         <div className="lg:flex justify-between space-y-8 gap-8">
           <div className="space-y-4 w-full">
-            <div className="border-l-4 border-l-primary pl-2">
-              <h2 className="text-2xl font-semibold leading-normal tracking-wide">
-                Rekomendasi Untuk Anda
-              </h2>
-            </div>
+            <SectionTitle title="Rekomendasi untuk Anda" />
 
-            {isError && (
-              <p className="inline-flex items-center gap-1 text-destructive">
-                <CircleAlertIcon size={14} /> Gagal memuat berita
-              </p>
-            )}
+            {isError && <ErrorMessage />}
 
-            <div className="grid lg:grid-cols-2 gap-4">
-              {isLoading
-                ? Array.from({ length: 5 }).map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      className="h-90 lg:h-100 w-full bg-secondary"
-                    />
-                  ))
-                : recommendations.map((news) => (
-                    <NewsCard key={news.id} news={news} />
-                  ))}
-            </div>
+            <NewsGrid
+              columns="lg:grid-cols-2"
+              isLoading={isLoading}
+              skeletonCount={5}
+              skeletonHeight="h-135 lg:h-105"
+              data={recommendations}
+            />
           </div>
 
           <Card className="w-full lg:max-w-lg h-fit lg:sticky top-28">
@@ -71,11 +59,7 @@ const HomePage = () => {
                       </li>
                     ))}
 
-                {isError && (
-                  <p className="inline-flex items-center gap-1 text-destructive">
-                    <CircleAlertIcon size={14} /> Gagal memuat berita
-                  </p>
-                )}
+                {isError && <ErrorMessage />}
               </ol>
             </CardContent>
           </Card>
