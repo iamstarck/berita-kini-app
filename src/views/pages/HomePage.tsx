@@ -9,7 +9,7 @@ import SectionTitle from "../components/atoms/SectionTitle";
 
 const HomePage = () => {
   const { headline, popular, recommendations, isLoading, isError } =
-    useHomeNews("cnn");
+    useHomeNews(["cnn", "republika", "cnbc"]);
 
   return (
     <div className="m-8 space-y-8">

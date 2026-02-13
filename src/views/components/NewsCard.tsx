@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatLocalDate } from "@/lib/date";
 import type { News } from "@/types/news";
 import { CalendarIcon } from "lucide-react";
+import CardImage from "./atoms/CardImage";
 
 interface NewsCardProps {
   news: News;
@@ -20,10 +20,10 @@ const NewsCard = ({ news }: NewsCardProps) => {
       <Card className="flex overflow-hidden py-0 w-full gap-2">
         <div className="w-full overflow-hidden">
           <AspectRatio ratio={16 / 9} className="overflow-hidden">
-            <img
-              src={news.imageUrl}
-              alt="News cover"
-              className="w-full h-full transition-transform duration-300 group-hover:scale-105 object-cover"
+            <CardImage
+              title={news.title}
+              imageUrl={news.imageUrl}
+              enableHover
             />
           </AspectRatio>
         </div>
@@ -38,8 +38,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
             </CardDescription>
 
             <time className="flex items-center gap-1 text-destructive/80 font-medium">
-              <CalendarIcon size={16} />{" "}
-              {news?.publishedAt && formatLocalDate(news.publishedAt)}
+              <CalendarIcon size={16} /> {news?.publishedAt && news.publishedAt}
             </time>
           </CardHeader>
         </CardContent>

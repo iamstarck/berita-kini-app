@@ -1,18 +1,17 @@
 import { categorySlug, type HomeNewsResult } from "@/types/definitions";
-import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";
 import type { News, NewsSource } from "@/types/news";
-import { fetchNews } from "@/api/fetchNews";
+import { useAggregatedNews } from "./useAggregatedNews";
+import { fetchAggregatedNews } from "@/utils/aggregator.service";
 
-export const useHomeNews = (source: NewsSource): HomeNewsResult => {
-  const allNewsQuery = useNews(source);
+export const useHomeNews = (sources: NewsSource[]): HomeNewsResult => {
+  const allNewsQuery = useAggregatedNews(sources);
 
   const categoryQueries = useQueries({
     queries: categorySlug.map((c) => ({
-      queryKey: ["news", source, c],
-      queryFn: () => fetchNews(source, c),
+      queryKey: ["news", sources.join(","), c],
+      queryFn: () => fetchAggregatedNews(sources, c),
       staleTime: 1000 * 60 * 5,
-      gcTime: 1000 * 60 * 5 * 10,
     })),
   });
 
