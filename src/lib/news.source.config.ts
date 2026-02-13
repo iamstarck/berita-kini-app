@@ -27,4 +27,12 @@ export const newsSourceConfig: Record<
       olahraga: "sepakbola",
     },
   },
+
+  cnbc: {
+    categoryMap: {
+      ekonomi: "market",
+      teknologi: "tech",
+      "gaya-hidup": "lifestyle",
+    },
+  },
 };

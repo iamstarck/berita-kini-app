@@ -1,4 +1,4 @@
-export type NewsSource = "cnn" | "republika";
+export type NewsSource = "cnn" | "republika" | "cnbc";
 
 export interface News {
   id: string;
