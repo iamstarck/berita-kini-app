@@ -4,10 +4,10 @@ import {
   type CategorySlugType,
 } from "@/types/definitions";
 import type { News, NewsSource } from "@/types/news";
-import { useNews } from "./useNews";
 import { useQueries } from "@tanstack/react-query";
-import { fetchNews } from "@/api/fetchNews";
 import { useMemo } from "react";
+import { useAggregatedNews } from "./useAggregatedNews";
+import { fetchAggregatedNews } from "@/utils/aggregator.service";
 
 const pickRandomCategories = (
   categories: CategorySlugType[],
@@ -20,10 +20,10 @@ const pickRandomCategories = (
 };
 
 export const useCategoryNews = (
-  source: NewsSource,
+  sources: NewsSource[],
   category: CategorySlugType,
 ): CategoryNewsResult => {
-  const categoryNewsQuery = useNews(source, category);
+  const categoryNewsQuery = useAggregatedNews(sources, category);
 
   const randomCategories = useMemo(
     () => pickRandomCategories(categorySlug, category, 5),
@@ -32,8 +32,8 @@ export const useCategoryNews = (
 
   const otherCategoryQueries = useQueries({
     queries: randomCategories.map((c) => ({
-      queryKey: ["news", source, c],
-      queryFn: () => fetchNews(source, c),
+      queryKey: ["news", sources, c],
+      queryFn: () => fetchAggregatedNews(sources, c),
       staleTime: 1000 * 60 * 5,
     })),
   });
@@ -72,25 +72,17 @@ export const useCategoryNews = (
 
   const categoryNewsRaw: News[] = categoryNewsQuery.data ?? [];
 
-  const headline = categoryNewsRaw.reduce(
-    (latest, current) => {
-      if (!current.imageUrl) return latest;
-      if (!latest) return current;
+  const headline = categoryNewsRaw.find((n) => n.imageUrl) ?? null;
 
-      return Date.parse(current.publishedAt) > Date.parse(latest.publishedAt)
-        ? current
-        : latest;
-    },
-    null as News | null,
-  );
-
-  const categoryNews: News[] = categoryNewsRaw.filter((n) => n !== headline);
+  const categoryNews: News[] = headline
+    ? categoryNewsRaw.filter((n) => n.id !== headline.id)
+    : categoryNewsRaw;
 
   const recommendations: News[] = [];
 
   otherCategoryQueries.forEach((query) => {
     const items: News[] = query.data ?? [];
-    const candidate = items.find((n: News) => Boolean(n.imageUrl));
+    const candidate = items.find((n: News) => n.imageUrl) ?? null;
 
     if (candidate) recommendations.push(candidate);
   });

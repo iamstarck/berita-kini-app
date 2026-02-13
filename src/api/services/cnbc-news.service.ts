@@ -1,18 +1,21 @@
 import { axiosInstance, BASE_URL } from "@/lib/axios";
 import type { CategorySlugType } from "@/types/definitions";
-import type { CnnNewsResponse } from "@/types/cnn.types";
+import type { CnbcNewsResponse } from "@/types/sources/cnbc.types";
 import type { News } from "@/types/news";
+import { formatLocalDate } from "@/lib/date";
 
-const CNN_ENDPOINT = "cnn-news";
-const cnnAxios = axiosInstance(BASE_URL);
+const CNBC_ENDPOINT = "cnbc-news";
+const cnbcAxios = axiosInstance(BASE_URL);
 
-export const fetchCnnNews = async (
+export const fetchCnbcNews = async (
   category?: CategorySlugType,
 ): Promise<News[]> => {
-  const endpoint = category ? `${CNN_ENDPOINT}/${category}` : `${CNN_ENDPOINT}`;
+  const endpoint = category
+    ? `${CNBC_ENDPOINT}/${category}`
+    : `${CNBC_ENDPOINT}`;
 
   try {
-    const response = await cnnAxios.get<CnnNewsResponse>(endpoint);
+    const response = await cnbcAxios.get<CnbcNewsResponse>(endpoint);
     const items = response.data.data ?? [];
 
     return items.map((item) => ({
@@ -20,9 +23,9 @@ export const fetchCnnNews = async (
       title: item.title,
       summary: item.contentSnippet,
       url: item.link,
-      publishedAt: item.isoDate,
+      publishedAt: formatLocalDate(item.isoDate),
       imageUrl: item.image?.large,
-      source: "cnn",
+      source: "cnbc",
     }));
   } catch (error) {
     console.error("FETCH ERROR:", error);

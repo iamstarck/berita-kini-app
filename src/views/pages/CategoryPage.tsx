@@ -30,7 +30,7 @@ const CategoryPage = () => {
   const categoryToUse = currentCategory ?? categorySlug[0];
 
   const { headline, categoryNews, recommendations, isLoading, isError } =
-    useCategoryNews("cnn", categoryToUse);
+    useCategoryNews(["cnn", "republika", "cnbc"], categoryToUse);
 
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedQuery = useDebounce(searchQuery, 300);
