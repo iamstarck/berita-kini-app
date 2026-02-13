@@ -11,10 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatLocalDate } from "@/lib/date";
 import type { News } from "@/types/news";
 import { CalendarIcon } from "lucide-react";
 import ErrorMessage from "./atoms/ErrorMessage";
+import CardImage from "./atoms/CardImage";
 
 interface HeadlineCardProps {
   news: News | null;
@@ -33,11 +33,7 @@ const HeadlineCard = ({ news, isLoading, isError }: HeadlineCardProps) => {
             <Skeleton className="w-full h-full bg-secondary" />
           </AspectRatio>
         ) : (
-          <img
-            src={news?.imageUrl}
-            alt="Headline cover"
-            className="w-full h-full"
-          />
+          <CardImage title={news?.title} imageUrl={news?.imageUrl} />
         )}
 
         <Badge
@@ -77,7 +73,7 @@ const HeadlineCard = ({ news, isLoading, isError }: HeadlineCardProps) => {
           ) : (
             <time className="flex items-center gap-1 text-destructive font-medium">
               <CalendarIcon size={20} />
-              {news?.publishedAt && formatLocalDate(news.publishedAt)}
+              {news?.publishedAt && news.publishedAt}
             </time>
           )}
         </CardHeader>

@@ -9,7 +9,7 @@ export const newsSourceConfig: Record<
 > = {
   cnn: {
     categoryMap: {
-      nasional: "national",
+      nasional: "nasional",
       internasional: "internasional",
       ekonomi: "ekonomi",
       olahraga: "olahraga",

@@ -1,4 +1,5 @@
 import { axiosInstance, BASE_URL } from "@/lib/axios";
+import { formatLocalDate } from "@/lib/date";
 import type { CategorySlugType } from "@/types/definitions";
 import type { News } from "@/types/news";
 import type {
@@ -25,7 +26,7 @@ export const fetchRepublikaNews = async (
       title: item.title,
       summary: item.description,
       url: item.link,
-      publishedAt: new Date(item.isoDate).toISOString(),
+      publishedAt: formatLocalDate(item.isoDate),
       imageUrl: item.image.small,
       author: item.creator,
       source: "republika",
