@@ -4,7 +4,7 @@ import type { CategorySlugType } from "@/types/definitions";
 import { fetchRepublikaNews } from "./services/republika-news.service";
 import { fetchCnbcNews } from "./services/cnbc-news.service";
 
-export type NewsFetcher = (category?: CategorySlugType) => Promise<News[]>;
+type NewsFetcher = (category?: CategorySlugType) => Promise<News[]>;
 
 export const newsFetchers: Record<NewsSource, NewsFetcher> = {
   cnn: fetchCnnNews,
