@@ -52,7 +52,7 @@ cd berita-kini-app
 npm install
 ```
 
-### 3. Add .env file
+### 3. Add .env file and just type this
 
 ```bash
 VITE_API_BASE=/api

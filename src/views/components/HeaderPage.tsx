@@ -35,7 +35,7 @@ const HeaderPage = () => {
       <Link to="/" className="flex items-center gap-2">
         <img src={appLogo} alt="logo" />
         <p className="text-2xl font-semibold text-primary leading-5">
-          UPDATE BERITA
+          JONI NEWS
         </p>
       </Link>
 

@@ -13,7 +13,7 @@ type ThemeProviderProps = {
 
 export function ThemeProvider({
   children,
-  defaultTheme = "light",
+  defaultTheme = "system",
   storageKey = "news-theme",
   ...props
 }: ThemeProviderProps) {
@@ -32,10 +32,13 @@ export function ThemeProvider({
         .matches
         ? "dark"
         : "light";
+
       root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
+
+      return;
     }
+
+    root.classList.add(theme);
   }, [theme]);
 
   const value: ThemeProviderState = {
