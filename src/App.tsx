@@ -30,7 +30,7 @@ const Routes = () => {
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="news-theme">
+    <ThemeProvider defaultTheme="system" storageKey="joninews-theme">
       <Wrapper>
         <HeaderPage />
         <main className="min-h-screen mt-8">
