@@ -1,6 +1,6 @@
 import type { TDateISO } from "@/types/definitions";
 
-export interface CnbcNewsImage {
+interface CnbcNewsImage {
   small: string;
   large: string;
 }
