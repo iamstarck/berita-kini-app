@@ -17,7 +17,7 @@ const FooterPage = () => {
           <div className="flex items-center gap-2">
             <Link to={"/"} className="flex items-center gap-1">
               <AppLogo className="stroke-background w-8" />
-              <p className="text-xl font-semibold">UPDATE BERITA</p>
+              <p className="text-xl font-semibold">JONI NEWS</p>
             </Link>
           </div>
 
@@ -61,7 +61,7 @@ const FooterPage = () => {
           <p className="font-bold">Hubungi Kami</p>
           <div className="space-y-2">
             <p className="flex items-center gap-2">
-              <MailIcon /> info@updateberita.com
+              <MailIcon /> info@joninews.com
             </p>
             <p>Semarang, Indonesia</p>
           </div>
@@ -70,7 +70,7 @@ const FooterPage = () => {
 
       <div className="border-t pt-4">
         <p className="text-center">
-          &copy; 2026 Update Berita. All Rights Reserved.
+          &copy; 2026 Joni News. All Rights Reserved.
         </p>
       </div>
     </footer>

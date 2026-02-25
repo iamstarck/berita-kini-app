@@ -7,9 +7,9 @@ export type ThemeProviderState = {
   setTheme: (theme: Theme) => void;
 };
 
-export const initialState: ThemeProviderState = {
-  theme: "light",
-  setTheme: () => "light",
+const initialState: ThemeProviderState = {
+  theme: "system",
+  setTheme: () => null,
 };
 
 export const ThemeProviderContext =
